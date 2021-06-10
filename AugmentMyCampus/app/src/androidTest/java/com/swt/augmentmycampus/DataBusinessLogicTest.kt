@@ -4,6 +4,8 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.jakewharton.espresso.OkHttp3IdlingResource
+import com.swt.augmentmycampus.api.model.SearchResponse
+import com.swt.augmentmycampus.api.model.SearchResultItem
 import com.swt.augmentmycampus.businessLogic.*
 import com.swt.augmentmycampus.dependencyInjection.ApplicationModule
 import com.swt.augmentmycampus.dependencyInjection.ConfigurationModule
@@ -18,6 +20,8 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert
 import org.junit.*
 import org.junit.runner.RunWith
 import javax.inject.Inject
@@ -29,16 +33,16 @@ import javax.inject.Inject
 @UninstallModules(ConfigurationModule::class)
 class DataBusinessLogicTest {
 
-    @Module
-    @InstallIn(SingletonComponent::class)
-    object FakeConfigurationModule {
-        @Provides
-        fun provideTestWebservice() = WebserviceConfiguration("http://localhost:8080/")
-    }
+            @Module
+            @InstallIn(SingletonComponent::class)
+            object FakeConfigurationModule {
+                @Provides
+                fun provideTestWebservice() = WebserviceConfiguration("http://localhost:8080/")
+            }
 
-    private lateinit var mockWebServer: MockWebServer
+                    private lateinit var mockWebServer: MockWebServer
 
-    private lateinit var dataBusinessLogic: DataBusinessLogic
+            private lateinit var dataBusinessLogic: DataBusinessLogic
 
     @get:Rule
     var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
@@ -73,7 +77,7 @@ class DataBusinessLogicTest {
     @Test
     fun webserviceNotFound_Error() {
         createNotFoundResponse()
-        Assert.assertThrows(CouldNotReachServerException::class.java) { dataBusinessLogic.getTextFromUrl("https://www.ourwebservice.at") }
+        Assert.assertThrows(CouldNotReachServerException::class.java) { dataBusinessLogic.getTextFromUrl("http://localhost:1234") }
     }
 
     @Test
@@ -88,7 +92,7 @@ class DataBusinessLogicTest {
 
     @Test
     fun urlNotWhitelisted_Error() {
-        val url = "http://www.google.com";
+        val url = "http://localhost:8080";
 
         createUrlInvalidResponse()
         Assert.assertThrows(CouldNotReachServerException::class.java) { dataBusinessLogic.getTextFromUrl(url) }
@@ -97,11 +101,9 @@ class DataBusinessLogicTest {
     @Test
     fun textResponse_Success() {
         val url = FakeConfigurationModule.provideTestWebservice().baseUrl + "test/path/"
-        val response = "some data to display";
-
         createUrlValidResponse()
-        createTextResponse(response)
-        Assert.assertEquals(response, dataBusinessLogic.getTextFromUrl(url));
+        createTextResponse("")
+        Assert.assertEquals("\"\"", dataBusinessLogic.getTextFromUrl(url));
     }
 
     private fun createNotFoundResponse() {
@@ -128,5 +130,7 @@ class DataBusinessLogicTest {
             setBody(moshi.adapter(String::class.java).toJson(text))
         })
     }
+
+
 
 }

@@ -1,12 +1,17 @@
 package com.swt.augmentmycampus.businessLogic
 
+import android.util.Log
+import com.squareup.moshi.Json
+import com.swt.augmentmycampus.api.model.LectureInformation
+import com.swt.augmentmycampus.dependencyInjection.ConfigurationModule
 import com.swt.augmentmycampus.network.Webservice
-import retrofit2.Call
-import retrofit2.Response
-import java.lang.IllegalStateException
-import java.net.URL
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONArray
+import java.util.*
 import javax.inject.Inject
 import kotlin.jvm.Throws
+
 
 class InvalidUrlException() : Exception("Url not valid!")
 class CouldNotReachServerException() : Exception("Server could not reached!")
@@ -16,7 +21,13 @@ interface DataBusinessLogic {
     fun getTextFromUrl(url: String): String;
 
     @Throws(InvalidUrlException::class)
-    fun performRestCall(url: String): Response<String>;
+    fun getLectureInformationFromTag(tag: String): LectureInformation;
+
+    fun getResultsForSearchQuery(query: String): List<LectureInformation>;
+
+    @Throws(InvalidUrlException::class)
+    fun performRestCall(url: String): String;
+
 }
 
 class DataBusinessLogicImpl @Inject constructor (
@@ -24,22 +35,40 @@ class DataBusinessLogicImpl @Inject constructor (
     private val webservice: Webservice
 ) : DataBusinessLogic {
 
-    override fun performRestCall(url: String): Response<String> {
-        return webservice.isUrlOnWhitelist(url).execute();
+    override fun performRestCall(url: String): String {
+        var ws : Webservice;
+
+        val request: Request = Request.Builder()
+            .url(url)
+            .build()
+
+        val client = OkHttpClient()
+        try {
+            client.newCall(request).execute().use { response ->
+                if(!response.isSuccessful) {
+                    throw CouldNotReachServerException();
+                }
+                return response.body!!.string()
+            }
+        } catch(e : Exception) {
+            throw CouldNotReachServerException();
+        }
     }
 
     override fun getTextFromUrl(url: String): String {
         if (!urlBusinessLogic.isValidUrlFormat(url)) throw InvalidUrlException()
+        return  performRestCall(url.replace("verifyQrCodeNoApp", "verifyQrCode"));
+    }
 
-        val urlResponse = performRestCall(url);
-        if (!urlResponse.isSuccessful) throw CouldNotReachServerException()
+    override fun getLectureInformationFromTag(tag: String): LectureInformation {
+        val response = webservice.getLectureInformationForTag(tag).execute()
+        if(!response.isSuccessful) throw java.lang.Exception(response.errorBody().toString())
+        return response.body()!!
+    }
 
-        val textResponse = webservice.getTextResponse(url).execute()
-        if (!textResponse.isSuccessful) throw CouldNotReachServerException()
-
-        val body = textResponse.body()
-        if (body is String) return body
-
-        return ""
+    override fun getResultsForSearchQuery(query: String): List<LectureInformation> {
+        val response = webservice.getSearchResult(query).execute()
+        if(!response.isSuccessful) throw java.lang.Exception(response.errorBody().toString())
+        return response.body()!!
     }
 }

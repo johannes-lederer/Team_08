@@ -46,3 +46,28 @@ can be used as kick start for a desired CO (student) Community.
 
 ### Release 1 
 Incorporates all tickets from Sprint 1 & 2 
+
+### Sprint 3: 
+**mobile application** 
+* display of lecture information [AC-12](https://github.com/sw21-tug/Team_08/issues/12)
+* integration of QR code scanner [AC-17](https://github.com/sw21-tug/Team_08/issues/23)
+
+**backend**
+* lecture information [AC-12.1](https://github.com/sw21-tug/Team_08/issues/28)
+
+### Sprint 4: 
+**mobile application**
+* display of lecture information - information retrieval [AC-12.3](https://github.com/sw21-tug/Team_08/issues/30)
+* display of lecture information - russian translations [AC-12.4](https://github.com/sw21-tug/Team_08/issues/45)
+
+**backend**
+* Generate QR Code image from text [AC-09](https://github.com/sw21-tug/Team_08/issues/9)
+* add time context to data[AC-08](https://github.com/sw21-tug/Team_08/issues/8)
+
+**backend and mobile application**
+* user can control flash [AC-19](https://github.com/sw21-tug/Team_08/issues/31)
+* search function [AC-22](https://github.com/sw21-tug/Team_08/issues/46)
+* login functionality [AC-11](https://github.com/sw21-tug/Team_08/issues/11)
+
+### Release 2 
+Incorporates all tickets from Sprint 3 & 4 and Release 1

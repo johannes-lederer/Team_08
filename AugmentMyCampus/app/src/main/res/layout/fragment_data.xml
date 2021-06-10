@@ -2,18 +2,217 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_data_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.data.DataFragment"
-    android:id="@+id/fragment_data_id">
+    android:outlineProvider="paddedBounds"
+    tools:context=".ui.data.DataFragment">
 
-    <TextView
-        android:id="@+id/textview_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp">
+
+
+                <Button
+                    android:id="@+id/registerButton"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="registerButtonOnClick"
+                    android:text="Register"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/expandableListViewDates"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ExpandableListView
+                    android:id="@+id/expandableListViewDates"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:divider="@android:color/darker_gray"
+                    android:dividerHeight="0.5dp"
+                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/expandableListViewContent"
+                    tools:layout_editor_absoluteX="24dp"></ExpandableListView>
+
+                <TextView
+                    android:id="@+id/label_number_value"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:layout_marginHorizontal="10dp"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+                    android:paddingBottom="5px"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/label_number"
+                    app:layout_constraintTop_toTopOf="@+id/label_number" />
+
+                <TextView
+                    android:id="@+id/label_lecturer_value"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+                    android:paddingBottom="5px"
+                    android:layout_marginHorizontal="10dp"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/label_lecturer"
+                    app:layout_constraintTop_toTopOf="@+id/label_lecturer" />
+
+                <TextView
+                    android:id="@+id/label_semester_value"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:layout_marginHorizontal="10dp"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+                    android:paddingBottom="5px"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/label_semester"
+                    app:layout_constraintTop_toTopOf="@+id/label_semester" />
+
+                <TextView
+                    android:id="@+id/label_lecturer"
+                    android:layout_width="100dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+                    android:paddingBottom="5px"
+                    android:text="@string/label_lecturer_text"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="@id/label_number"
+                    app:layout_constraintTop_toTopOf="@id/label_ects" />
+
+                <ExpandableListView
+                    android:id="@+id/expandableListViewContent"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:divider="@android:color/darker_gray"
+                    android:dividerHeight="0.5dp"
+                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/label_lecturer"
+                    tools:layout_editor_absoluteX="24dp">
+
+                </ExpandableListView>
+
+                <TextView
+                    android:id="@+id/label_ects_value"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+                    android:paddingBottom="5px"
+                    android:layout_marginHorizontal="10dp"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/label_ects"
+                    app:layout_constraintTop_toTopOf="@+id/label_ects" />
+
+                <TextView
+                    android:id="@+id/label_number"
+                    android:layout_width="100dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+                    android:paddingBottom="5px"
+                    android:text="@string/label_number_text"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/label_header" />
+
+                <TextView
+                    android:id="@+id/label_semester"
+                    android:layout_width="100dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+
+                    android:paddingBottom="5px"
+                    android:text="@string/label_semester_text"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="@id/label_number"
+                    app:layout_constraintTop_toTopOf="@id/label_number" />
+
+                <TextView
+                    android:id="@+id/label_header"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rectangle_border2"
+                    android:outlineProvider="background"
+                    android:paddingLeft="5px"
+                    android:paddingTop="5px"
+                    android:paddingRight="5px"
+                    android:paddingBottom="5px"
+                    android:text="Agile Software Development"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/label_ects"
+                    android:layout_width="100dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/rectangle_border"
+                    android:outlineProvider="background"
+                    android:paddingLeft="20px"
+                    android:paddingTop="5px"
+                    android:paddingRight="20px"
+                    android:paddingBottom="5px"
+                    android:text="@string/label_ects_text"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="@id/label_number"
+                    app:layout_constraintTop_toTopOf="@id/label_semester" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
