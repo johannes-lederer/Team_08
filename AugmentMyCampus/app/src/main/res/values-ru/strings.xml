@@ -41,4 +41,8 @@
 
 
     <string name="settings_language">Язык</string>
+    <string name="account_image">Изображение аккаунта</string>
+    <string name="title_search">поиск</string>
+    <string name="verb_search">поиск</string>
+    <string name="no_data_text">нет данных</string>
 </resources>

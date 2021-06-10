@@ -57,7 +57,7 @@ class DataBusinessLogicImpl @Inject constructor (
 
     override fun getTextFromUrl(url: String): String {
         if (!urlBusinessLogic.isValidUrlFormat(url)) throw InvalidUrlException()
-        return  performRestCall(url);
+        return  performRestCall(url.replace("verifyQrCodeNoApp", "verifyQrCode"));
     }
 
     override fun getLectureInformationFromTag(tag: String): LectureInformation {
