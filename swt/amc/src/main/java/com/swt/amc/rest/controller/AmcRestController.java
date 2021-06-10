@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.swt.amc.AmcConfig;
 import com.swt.amc.api.LectureInformation;
 import com.swt.amc.api.UserInformationResponse;
 import com.swt.amc.api.UsernamePasswordInformation;
@@ -32,6 +33,9 @@ public class AmcRestController {
 
 	@Autowired
 	private IAmcComponent amcComponent;
+
+	@Autowired
+	private AmcConfig amcConfig;
 
 	private static final Logger log = LoggerFactory.getLogger(AmcRestController.class);
 
@@ -78,7 +82,7 @@ public class AmcRestController {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
-			ImageIO.write(amcComponent.generateQrCode("http://192.168.1.10:8082/verifyQrCodeNoApp/" + tag), "png",
+			ImageIO.write(amcComponent.generateQrCode(amcConfig.getBackendUrl() + "/verifyQrCodeNoApp/" + tag), "png",
 					baos);
 		} catch (IOException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
